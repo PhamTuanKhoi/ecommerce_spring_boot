@@ -1,0 +1,117 @@
+package com.v1.ecommerce.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
+@Entity
+public class Address {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lassName;
+
+    @Column(name = "street_address")
+    private String streetAddress;
+
+    private String city;
+    private String state;
+
+    @Column(name = "zip_code")
+    private String zipCode;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
+    private User mobile;
+
+    public Address(){}
+
+    public Address(Long id, String firstName, String lassName, String streetAddress, String city, String state, String zipCode, User user, User mobile) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lassName = lassName;
+        this.streetAddress = streetAddress;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+        this.user = user;
+        this.mobile = mobile;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLassName() {
+        return lassName;
+    }
+
+    public void setLassName(String lassName) {
+        this.lassName = lassName;
+    }
+
+    public String getStreetAddress() {
+        return streetAddress;
+    }
+
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(User mobile) {
+        this.mobile = mobile;
+    }
+}
