@@ -13,7 +13,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String firstName;
-    private String lassName;
+    private String lastName;
     private String password;
     private String email;
     private String role;
@@ -39,10 +39,10 @@ public class User {
 
     public User(){}
 
-    public User(Long id, String firstName, String lassName, String password, String email, String role, String mobile, List<Address> address, List<PaymentInformation> paymentInformation, List<Rating> ratings, List<Review> reviews, LocalDateTime createdAt) {
+    public User(Long id, String firstName, String lastName, String password, String email, String role, String mobile, List<Address> address, List<PaymentInformation> paymentInformation, List<Rating> ratings, List<Review> reviews, LocalDateTime createdAt) {
         this.id = id;
         this.firstName = firstName;
-        this.lassName = lassName;
+        this.lastName = lastName;
         this.password = password;
         this.email = email;
         this.role = role;
@@ -70,12 +70,12 @@ public class User {
         this.firstName = firstName;
     }
 
-    public String getLassName() {
-        return lassName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLassName(String lassName) {
-        this.lassName = lassName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPassword() {

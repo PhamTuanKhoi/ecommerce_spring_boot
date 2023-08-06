@@ -27,11 +27,11 @@ public class Address {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
-    private User mobile;
+    private String mobile;
 
     public Address(){}
 
-    public Address(Long id, String firstName, String lassName, String streetAddress, String city, String state, String zipCode, User user, User mobile) {
+    public Address(Long id, String firstName, String lassName, String streetAddress, String city, String state, String zipCode, User user, String mobile) {
         this.id = id;
         this.firstName = firstName;
         this.lassName = lassName;
@@ -107,11 +107,11 @@ public class Address {
         this.user = user;
     }
 
-    public User getMobile() {
+    public String getMobile() {
         return mobile;
     }
 
-    public void setMobile(User mobile) {
+    public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 }
