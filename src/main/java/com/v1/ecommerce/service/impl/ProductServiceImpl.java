@@ -15,8 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,6 +25,12 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
     private ModelMapper modelMapper;
+
+    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, ModelMapper modelMapper) {
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public Product create(CreateProductRequest req) {
@@ -103,8 +107,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findById(Long id) throws ProductException {
         Optional<Product> product = this.productRepository.findById(id);
-
-        if(product == null){
+        if(product == null || product.isEmpty()){
             throw new ProductException("Product not found by id# " + id);
         }
         return product.get();
@@ -112,7 +115,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findByCategoryId(Long categoryId) {
-        return null;
+        return productRepository.findByCategoryId(categoryId);
     }
 
     @Override

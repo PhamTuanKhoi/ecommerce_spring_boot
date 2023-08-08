@@ -30,4 +30,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 //            @Param("colors") List<String> colors, @Param("sizes") List<String> sizes,
 //            @Param("pageNumber") Integer pageNumber, @Param("pageSize") Integer pageSize
     );
+
+    @Query("SELECT p FROM #{#entityName} p WHERE p.category.id =:categoryId")
+    public Product findByCategoryId(Long categoryId);
 }

@@ -1,6 +1,8 @@
 package com.v1.ecommerce.config;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,6 +21,15 @@ import java.util.Collections;
 @Configuration
 @EnableWebSecurity
 public class AppConfig {
+
+    @Bean
+    public ModelMapper modelMapper() {
+        // Tạo object và cấu hình
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.STRICT);
+        return modelMapper;
+    }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
