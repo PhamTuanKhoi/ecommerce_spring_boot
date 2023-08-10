@@ -8,7 +8,6 @@ import java.util.Set;
 
 public class CreateProductRequest {
 
-
     private String title;
     private String description;
     private int price;

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/product")
 public class ProductController {
     private ProductService productService;
 
@@ -42,22 +42,22 @@ public class ProductController {
     }
 
     @GetMapping("category/{categoryId}")
-    public Product findByCategoryId(Long categoryId){
+    public Product findByCategoryId(@PathVariable Long categoryId){
         return this.productService.findByCategoryId(categoryId);
     };
 
     @PostMapping
-    public Product create(CreateProductRequest req){
+    public Product create(@RequestBody CreateProductRequest req){
         return this.productService.create((req));
     };
 
     @PatchMapping("/{id}")
-    public Product update(Long id, Product productRequest) throws ProductException {
+    public Product update(@PathVariable Long id,@RequestBody Product productRequest) throws ProductException {
         return this.productService.update(id, productRequest);
     };
 
     @DeleteMapping("/{id}")
-    public String delete(Long id) throws ProductException {
+    public String delete(@PathVariable Long id) throws ProductException {
         return this.productService.delete(id);
     };
 }

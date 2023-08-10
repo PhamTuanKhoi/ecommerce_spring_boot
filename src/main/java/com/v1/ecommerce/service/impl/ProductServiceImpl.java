@@ -34,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product create(CreateProductRequest req) {
+        System.out.println("req.getTopLevelCategory() = " + req.getTopLevelCategory());
         Category topLevelCategory = this.categoryRepository.findByName(req.getTopLevelCategory());
 
         if(topLevelCategory == null){
@@ -44,11 +45,14 @@ public class ProductServiceImpl implements ProductService {
             topLevelCategory = this.categoryRepository.save(category);
         }
 
+        System.out.println("topLevelCategory = " + topLevelCategory);
+
         Category secondLevelCategory = this.categoryRepository.findByName(req.getSecondLevelCategory());
 
         if(secondLevelCategory == null){
             Category category = new Category();
             category.setName(req.getSecondLevelCategory());
+            category.setParentCategory(topLevelCategory);
             category.setLevel(2);
 
             secondLevelCategory = this.categoryRepository.save(category);
@@ -59,6 +63,7 @@ public class ProductServiceImpl implements ProductService {
         if(thirdLevelCategory == null){
             Category category = new Category();
             category.setName(req.getThirdLevelCategory());
+            category.setParentCategory(secondLevelCategory);
             category.setLevel(3);
 
             thirdLevelCategory = this.categoryRepository.save(category);

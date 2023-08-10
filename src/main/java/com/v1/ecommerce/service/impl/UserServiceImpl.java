@@ -5,9 +5,11 @@ import com.v1.ecommerce.exception.UserException;
 import com.v1.ecommerce.model.User;
 import com.v1.ecommerce.repository.UserRepository;
 import com.v1.ecommerce.service.UserService;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private JwtProvider jwtProvider;

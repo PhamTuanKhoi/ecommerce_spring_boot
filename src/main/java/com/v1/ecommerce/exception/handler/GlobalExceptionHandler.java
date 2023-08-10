@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler({ ProductException.class, UserException.class })  // Có thể bắt nhiều loại exception
-    public ResponseEntity<String> handleExceptionA(Exception e) {
+    public ResponseEntity<String> handleException(Exception e) {
         return ResponseEntity.status(432).body(e.getMessage());
     }
 
