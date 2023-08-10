@@ -11,9 +11,11 @@ import com.v1.ecommerce.repository.CartItemRepository;
 import com.v1.ecommerce.repository.CartRepository;
 import com.v1.ecommerce.service.CartItemService;
 import com.v1.ecommerce.service.UserService;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class CartItemServiceImpl implements CartItemService {
     private CartItemRepository cartItemRepository;
     private CartRepository cartRepository;

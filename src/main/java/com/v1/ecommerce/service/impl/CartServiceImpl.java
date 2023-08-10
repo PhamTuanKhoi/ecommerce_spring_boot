@@ -10,7 +10,9 @@ import com.v1.ecommerce.request.AddItemRequest;
 import com.v1.ecommerce.service.CartItemService;
 import com.v1.ecommerce.service.CartService;
 import com.v1.ecommerce.service.ProductService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CartServiceImpl implements CartService {
     private CartRepository cartRepository;
     private CartItemService cartItemService;
@@ -32,10 +34,10 @@ public class CartServiceImpl implements CartService {
     @Override
     public String addCartItem(Long userId, AddItemRequest req) throws ProductException {
         Cart cart = this.cartRepository.findCartByUserId(userId);
+
         Product product = this.productService.findById(req.getProductId());
 
         CartItem isPresent = this.cartItemService.isCartItemExist(cart, product, req.getSize(), userId);
-
         if(isPresent == null){
             CartItem cartItem = new CartItem();
             cartItem.setProduct(product);

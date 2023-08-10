@@ -2,10 +2,12 @@ package com.v1.ecommerce.controller;
 
 import com.v1.ecommerce.config.JwtProvider;
 import com.v1.ecommerce.exception.UserException;
+import com.v1.ecommerce.model.Cart;
 import com.v1.ecommerce.model.User;
 import com.v1.ecommerce.repository.UserRepository;
 import com.v1.ecommerce.request.LoginRequest;
 import com.v1.ecommerce.response.AuthResponse;
+import com.v1.ecommerce.service.CartService;
 import com.v1.ecommerce.service.impl.CustomUserServiceImplementation;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -26,17 +28,14 @@ public class AuthController {
     private JwtProvider jwtProvider;
     private  PasswordEncoder passwordEncoder;
     private  CustomUserServiceImplementation customUserServiceImplementation;
+    private CartService cartService;
 
-    public AuthController(UserRepository userRepository, JwtProvider jwtProvider, PasswordEncoder passwordEncoder, CustomUserServiceImplementation customUserServiceImplementation) {
+    public AuthController(UserRepository userRepository, JwtProvider jwtProvider, PasswordEncoder passwordEncoder, CustomUserServiceImplementation customUserServiceImplementation, CartService cartService) {
         this.userRepository = userRepository;
         this.jwtProvider = jwtProvider;
         this.passwordEncoder = passwordEncoder;
         this.customUserServiceImplementation = customUserServiceImplementation;
-    }
-
-    @GetMapping("/")
-    public String list() {
-        return "hello";
+        this.cartService = cartService;
     }
 
     @PostMapping("/signup")
@@ -52,10 +51,14 @@ public class AuthController {
         modelMapper.map(userRequest, user);
         user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 
-        User save = this.userRepository.save(user);
+        User saved = this.userRepository.save(user);
+
+        Cart cart = new Cart();
+        cart.setUser(saved);
+        this.cartService.create(saved);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
-                save.getEmail(), save.getPassword()
+                saved.getEmail(), saved.getPassword()
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
