@@ -8,7 +8,7 @@ import com.v1.ecommerce.model.User;
 import java.util.List;
 
 public interface OrderService {
-    public Order create(User userReq, Address shippingAddress);
+    public Order create(User user, Address shippingAddress);
 
     public List<Order> findAll();
 
@@ -20,5 +20,5 @@ public interface OrderService {
     public Order deliveredOrder(Long id) throws OrderException;
     public Order cancledOrder(Long id) throws OrderException;
 
-    public void deleteOrder(Long orderId) throws OrderException;
+    public void delete(Long id) throws OrderException;
 }

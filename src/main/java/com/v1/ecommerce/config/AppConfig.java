@@ -35,6 +35,7 @@ public class AppConfig {
         http
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/api/**").authenticated().anyRequest().permitAll()
                 )
                 .csrf(csrf -> csrf.disable())

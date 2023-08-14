@@ -15,6 +15,8 @@ public interface ProductService {
                                  Integer pageSize
     );
 
+    public List<Product> findNewArrivals();
+
     public Product findById(Long id)throws ProductException;
 
     public Product findByCategoryId(Long categoryId);

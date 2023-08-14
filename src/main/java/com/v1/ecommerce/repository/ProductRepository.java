@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
@@ -12,7 +13,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     //    TODO: space p + " " because query is string
     @Query("SELECT p FROM #{#entityName} p " +
             "WHERE " +
-            "(p.category.name =:category OR p.category.name ='') " +
+            "(COALESCE(:category, '', NULL) = '' OR p.category.name =:category ) " +
             "AND ((:minPrice IS NULL AND :maxPrice IS NULL) OR (p.discountedPrice BETWEEN :minPrice AND :maxPrice))" +
             "AND (:minDiscount IS NULL OR p.discountPercent >= :minDiscount)" +
             "ORDER BY " +
@@ -31,6 +32,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 //            @Param("pageNumber") Integer pageNumber, @Param("pageSize") Integer pageSize
     );
 
+    @Query("SELECT p FROM #{#entityName} p WHERE " +
+            "(TIMESTAMPDIFF(second, p.createdAt, :currentTime) * 1000) < :aboutNew")
+    List<Product> findNewArrivals(
+            @Param("currentTime") LocalDateTime currentTime,
+            @Param("aboutNew") int aboutNew);
+
     @Query("SELECT p FROM #{#entityName} p WHERE p.category.id =:categoryId")
-    public Product findByCategoryId(Long categoryId);
+    Product findByCategoryId(Long categoryId);
 }

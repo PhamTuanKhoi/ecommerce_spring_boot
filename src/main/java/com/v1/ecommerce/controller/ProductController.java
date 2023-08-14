@@ -34,6 +34,11 @@ public class ProductController {
         return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/new")
+    public List<Product> findNewArrivals(){
+        return this.productService.findNewArrivals();
+    };
+
     @GetMapping("/{id}")
     public Product findById(@PathVariable Long id) throws ProductException {
 

@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -107,6 +108,13 @@ public class ProductServiceImpl implements ProductService {
 
         Page<Product> filteredProduct = new PageImpl<>(pageContent, pageable, products.size());
         return filteredProduct;
+    }
+
+    @Override
+    public List<Product> findNewArrivals() {
+        LocalDateTime currentTime = LocalDateTime.now();
+        int aboutNew = 70 * 60 * 60 * 1000;
+        return this.productRepository.findNewArrivals(currentTime, aboutNew);
     }
 
     @Override
