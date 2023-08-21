@@ -38,6 +38,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             @Param("currentTime") LocalDateTime currentTime,
             @Param("aboutNew") int aboutNew);
 
+    @Query("SELECT p FROM #{#entityName} p JOIN p.orderItems oi GROUP BY p HAVING COUNT(oi) > 0 " +
+            "ORDER BY COUNT(oi) DESC"
+    )
+    List<Product> findBestsellers();
+
     @Query("SELECT p FROM #{#entityName} p WHERE p.category.id =:categoryId")
     Product findByCategoryId(Long categoryId);
 }

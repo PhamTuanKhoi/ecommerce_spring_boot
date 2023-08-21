@@ -49,6 +49,8 @@ public class CartServiceImpl implements CartService {
             cartItem.setPrice(price);
             cartItem.setSize(req.getSize());
 
+            System.out.println("cartItem =============================== " + cartItem.getQuantity());
+
             CartItem saved = this.cartItemService.create(cartItem);
             cart.getCartItems().add(saved);
         }

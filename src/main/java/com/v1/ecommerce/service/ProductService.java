@@ -17,6 +17,8 @@ public interface ProductService {
 
     public List<Product> findNewArrivals();
 
+    public List<Product> findBestsellers();
+
     public Product findById(Long id)throws ProductException;
 
     public Product findByCategoryId(Long categoryId);

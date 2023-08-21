@@ -22,7 +22,7 @@ public class CartController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public Cart findCartByUserId(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt) throws UserException {
         User user = this.userService.findUserProviderByJwt(jwt);
         return cartService.findCartByUserId(user.getId());

@@ -39,6 +39,11 @@ public class ProductController {
         return this.productService.findNewArrivals();
     };
 
+    @GetMapping("/bestsellers")
+    public List<Product> findBestsellers(){
+        return this.productService.findBestsellers();
+    };
+
     @GetMapping("/{id}")
     public Product findById(@PathVariable Long id) throws ProductException {
 

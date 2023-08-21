@@ -41,6 +41,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItems = new ArrayList<>();
+
     @Column(name = "num_ratings")
     private int numRatings;
 
@@ -52,7 +55,7 @@ public class Product {
 
     public Product(){}
 
-    public Product(Long id, String title, String description, int price, int discountedPrice, int discountPercent, int quantity, String brand, String color, Set<Size> sizes, String imageUrl, List<Rating> ratings, List<Review> reviews, int numRatings, Category category, LocalDateTime createdAt) {
+    public Product(Long id, String title, String description, int price, int discountedPrice, int discountPercent, int quantity, String brand, String color, Set<Size> sizes, String imageUrl, List<Rating> ratings, List<Review> reviews, List<OrderItem> orderItems, int numRatings, Category category, LocalDateTime createdAt) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -66,6 +69,7 @@ public class Product {
         this.imageUrl = imageUrl;
         this.ratings = ratings;
         this.reviews = reviews;
+        this.orderItems = orderItems;
         this.numRatings = numRatings;
         this.category = category;
         this.createdAt = createdAt;
@@ -173,6 +177,14 @@ public class Product {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public int getNumRatings() {

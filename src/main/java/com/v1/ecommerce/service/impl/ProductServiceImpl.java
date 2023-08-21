@@ -118,6 +118,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> findBestsellers() {
+        return this.productRepository.findBestsellers();
+    }
+
+    @Override
     public Product findById(Long id) throws ProductException {
         Optional<Product> product = this.productRepository.findById(id);
         if(product == null || product.isEmpty()){
