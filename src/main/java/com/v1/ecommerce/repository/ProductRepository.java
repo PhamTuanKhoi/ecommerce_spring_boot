@@ -26,10 +26,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             @Param("maxPrice") Integer maxPrice,
             @Param("minDiscount") Integer minDiscount,
             @Param("sort") String sort
-//            ,
-//            @Param("stock") String stock,
-//            @Param("colors") List<String> colors, @Param("sizes") List<String> sizes,
-//            @Param("pageNumber") Integer pageNumber, @Param("pageSize") Integer pageSize
     );
 
     @Query("SELECT p FROM #{#entityName} p WHERE " +

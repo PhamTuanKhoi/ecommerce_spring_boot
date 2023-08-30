@@ -1,5 +1,9 @@
 package com.v1.ecommerce.config;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import jakarta.servlet.http.HttpServletRequest;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -17,10 +21,28 @@ import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 public class AppConfig {
+
+    @Bean
+    public OpenAPI springShopOpenAPI() {
+        return new OpenAPI()
+                .info(new Info().title("Ecommerce API")
+                        .description("Document")
+                        .version("v1")
+                )
+                .components(new Components()
+                        .addSecuritySchemes("bearer-key",
+                                new SecurityScheme()
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .in(SecurityScheme.In.HEADER)
+                                        .description("Jwt authorization")
+                                        .scheme("bearer").bearerFormat("JWT")));
+    }
+
 
     @Bean
     public ModelMapper modelMapper() {
@@ -30,6 +52,7 @@ public class AppConfig {
                 .setMatchingStrategy(MatchingStrategies.STRICT);
         return modelMapper;
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -40,7 +63,7 @@ public class AppConfig {
                 )
                 .csrf(csrf -> csrf.disable())
                 .addFilterBefore(new JwtValidator(), BasicAuthenticationFilter.class)
-                .cors(cors-> cors.configurationSource(new CorsConfigurationSource() {
+                .cors(cors -> cors.configurationSource(new CorsConfigurationSource() {
                     @Override
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                         CorsConfiguration corsConfig = new CorsConfiguration();
@@ -51,7 +74,7 @@ public class AppConfig {
                         corsConfig.setAllowedMethods(Collections.singletonList("*"));
                         corsConfig.setAllowCredentials(true);
                         corsConfig.setAllowedHeaders(Collections.singletonList("*"));
-                        corsConfig.setExposedHeaders(Arrays.asList("Authorization"));
+                        corsConfig.setExposedHeaders(List.of("Authorization"));
                         corsConfig.setMaxAge(3600L);
                         return corsConfig;
                     }
@@ -60,7 +83,7 @@ public class AppConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

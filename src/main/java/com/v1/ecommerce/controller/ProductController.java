@@ -4,6 +4,11 @@ import com.v1.ecommerce.exception.ProductException;
 import com.v1.ecommerce.model.Product;
 import com.v1.ecommerce.request.CreateProductRequest;
 import com.v1.ecommerce.service.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/product")
+@Tag(name = "Product")
 public class ProductController {
     private ProductService productService;
 
@@ -20,6 +26,8 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @SecurityRequirement(name = "bearer-key")
+    @Parameter(hidden = true)
     @GetMapping
     public ResponseEntity<Page<Product>> findAll(
             @RequestParam() String category, @RequestParam() List<String> colors,
@@ -34,11 +42,27 @@ public class ProductController {
         return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
     }
 
+
     @GetMapping("/new")
     public List<Product> findNewArrivals(){
         return this.productService.findNewArrivals();
     };
 
+    @SecurityRequirement(name = "bearer-key")
+    @Operation(
+            description = "get product bestsellers",
+            summary = "get product order many",
+            responses = {
+                    @ApiResponse(
+                            description = "success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "UnAuthorized / Invalid token",
+                            responseCode = "403"
+                    )
+            }
+    )
     @GetMapping("/bestsellers")
     public List<Product> findBestsellers(){
         return this.productService.findBestsellers();

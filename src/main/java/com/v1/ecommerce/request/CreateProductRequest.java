@@ -1,7 +1,6 @@
 package com.v1.ecommerce.request;
 
 import com.v1.ecommerce.model.Size;
-import jakarta.persistence.Column;
 
 import java.util.HashSet;
 import java.util.Set;
